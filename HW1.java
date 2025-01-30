@@ -1,6 +1,6 @@
 
 /*
- * *** PLACE YOUR NAME / SECTION  HERE ***
+ * *** Jacob Oh / 001 ***
  *
  * Homework # 1 (Programming Assignment). This Java class defines some basic
  * manipulation operations on Linked-Lists and Stacks.
@@ -11,7 +11,11 @@
  * specific number returned.
  */
 
+import javax.swing.*;
 import java.util.Stack;
+
+import static jdk.jfr.internal.instrument.JDKEvents.remove;
+
 
 public class HW1 {
 
@@ -83,13 +87,24 @@ public class HW1 {
          * value that is less than the provided parameter 'ltValue'.
          *
          * The method will invoke the method removeElements for each element
-         * found in the linked-list that is less than thr parameter value passed.
+         * found  in the linked-list that is less than thr parameter value passed.
          */
         public void removeElementsLT ( int ltValue ) {
 
-            // YOUR CODE GOES HERE
+            Node current = this.head; // start from the head of the list
 
-            return;
+            // identify where to place the item to insert
+            while (current.next != null) { // traverse the list until the last node
+                if (current.data < ltValue) { // check if current node's data is less than ltValue
+                    if (this.head != null) { // ensure the head is not null before updating
+                        this.head = this.head.next; // move head to the next node
+                    }
+                }
+                current = current.next; // move to the next node
+            }
+
+            return; // exit the method
+
         }
 
 
@@ -98,13 +113,25 @@ public class HW1 {
          * value equal to the value the provided parameter 'value'.
          */
 
-        public void removeElement ( int value ) {
+        public void removeElement(int value) {
+            Node current = this.head; // start from the head of the list
+            Node previous = null; // keep track of the previous node
 
-            // YOUR CODE GOES HERE
+            while (current != null) { // traverse the list
+                if (current.data == value) { // check if the current node contains the target value
+                    if (current == this.head) { // if it's the head, update the head
+                        this.head = current.next;
+                    } else { // otherwise, bypass the current node
+                        previous.next = current.next;
+                    }
+                    current = current.next; // move to the next node
+                } else { // if value not found in the current node, move forward
+                    previous = current;
+                    current = current.next;
+                }
+            }
 
-            return;
         }
-
 
         /*
          * Method toString() - this is a helper method for printing / constructing
@@ -157,11 +184,21 @@ public class HW1 {
          */
         public static boolean isPalindrome(String input) {
 
-            Stack<Character> stack = new Stack<>();
-            input = input.toLowerCase().replaceAll("\\s+", "");
+            Stack<Character> stack = new Stack<>(); // create a stack to store characters (not used in this snippet)
+            input = input.toLowerCase().replaceAll("\\s+", ""); // convert input to lowercase and remove spaces
 
-            // Your CODE GOES HERE
-            return false;
+// check if the input is a palindrome
+            boolean isPal = false; // initialize the palindrome flag to false
+            StringBuilder orig = new StringBuilder(input); // store the original input
+            StringBuilder reversed = new StringBuilder(input); // create a copy of input
+            reversed = reversed.reverse(); // reverse the copied input
+
+            if (reversed.toString().equals(orig.toString())) { // compare the reversed and original strings
+                isPal = true; // update flag if input is a palindrome
+            }
+
+            return isPal; // return the result
+
         }
 
 
@@ -183,7 +220,14 @@ public class HW1 {
         public static int findLargestK(Stack<Integer> stack, int k) {
 
             // YOUR CODE GOES HERE
-            return -1;
+            int temp_index = -1; // initialize the temporary index to -1, assuming k is not found
+            for (int i = 0; i < stack.size(); i++) { // iterate through the stack
+                if (stack.get(i).toString().equals(String.valueOf(k))) { // check if the string representation matches k
+                    temp_index = i; // update temp_index if k is found
+                }
+            }
+            return temp_index; // return the index of k if found, otherwise -1
+
         }
 
     }  // End class Stacks
@@ -216,10 +260,10 @@ public class HW1 {
          *   4. O(N * M) time, O(N + M) space
          *
          * TODO: return the answer (which option is correct), in the return statement
-        */
+         */
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        return 3;
     }
 
 
@@ -240,8 +284,7 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        return 2;
     }
 
 }
-
